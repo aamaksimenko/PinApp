@@ -1,1 +1,5 @@
-@import-normalize;
+:root {
+  --background: #1f1d1d;
+  --spacer: 16px;
+  --text: #c7c5c5;
+}

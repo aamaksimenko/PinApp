@@ -1,0 +1,44 @@
+.wrapper{
+padding-top: 60px
+}
+.pinInputCircles {
+  display:flex;
+  flex-flow:row;
+  justify-content:center;
+  grid-gap:30px;
+  color: var(--text);
+}
+.pinInputItem{
+  width:20px;
+  height:20px;
+  border-radius:50px;
+  border:2px solid var(--text);
+  text-align: center;
+}
+.keypad{
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  display: grid;
+  padding: 30px;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 30px;
+}
+.keyPadButton{
+  background-color: gray;
+  border-radius: calc(var(--spacer) * 3);
+  width: calc(var(--spacer) * 6);
+  height: calc(var(--spacer) * 6);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.zero {
+  grid-column-start: 2;
+}
+.keyPadButton:hover{
+  background-color: #f5d742;
+}
+.keyPadButton:active{
+  background-color: green;
+}

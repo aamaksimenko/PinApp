@@ -30,15 +30,23 @@ padding-top: 60px
   width: calc(var(--spacer) * 6);
   height: calc(var(--spacer) * 6);
   border: none;
-  color: white;
+  color: #e0dada;
   cursor: pointer;
 }
 .zero {
   grid-column-start: 2;
 }
 .keyPadButton:hover{
-  background-color: #f5d742;
+  background-color: #575555;
 }
 .keyPadButton:active{
-  background-color: green;
+  background-color: #999494;
+}
+.fillItem {
+  background-color: var(--text);
+}
+.error {
+  margin: 10px auto;
+    max-width: fit-content;
+    color: #e50505;
 }

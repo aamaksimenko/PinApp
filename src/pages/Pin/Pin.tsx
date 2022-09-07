@@ -1,28 +1,90 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  checkSavePin,
+  savePin,
+  setIsErrorPin,
+  selectorIsErrorPin,
+  selectorIsFirstLogin,
+  selectorSavedPin,
+} from '../../redux/pinSlice';
+import { keys, inputDefaultValues, ERROR_MESSAGE } from '../../constants';
+
 import styles from './Pin.module.css';
 
+const getClassesKey = (value: string) =>
+  value === '0' ? `${styles.keyPadButton} ${styles.zero}` : styles.keyPadButton;
+const getClassesInput = (value: string, isFirstLogin: boolean) =>
+  value && !isFirstLogin ? `${styles.pinInputItem} ${styles.fillItem}` : styles.pinInputItem;
+
 export function Pin() {
+  const [pin, setPin] = useState('');
+
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const isFirstLogin = useAppSelector(selectorIsFirstLogin);
+  const savedPin = useAppSelector(selectorSavedPin);
+  const isErrorPin = useAppSelector(selectorIsErrorPin);
+
+  useEffect(() => {
+    const localPin = localStorage.getItem('pin');
+    if (localPin) {
+      dispatch(checkSavePin(localPin));
+    }
+  }, []);
+
+  useEffect(() => {
+    const isError = pin !== savedPin;
+
+    if (pin.length === 6 && isFirstLogin) {
+      dispatch(savePin(pin));
+      navigate('/home');
+    }
+    if (pin.length === 6 && !isFirstLogin && !isError) {
+      navigate('/home');
+    }
+    if (pin.length === 6 && !isFirstLogin && isError) {
+      dispatch(setIsErrorPin(isError));
+    }
+  }, [pin]);
+
+  const handleChangePin = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (event.currentTarget.value === 'C') {
+      setPin(pin.slice(0, -1));
+      dispatch(setIsErrorPin(false));
+      return;
+    }
+    if (pin.length < 6) {
+      setPin(pin + event.currentTarget.value);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.pinInputCircles}>
-        <div className={styles.pinInputItem}>1</div>
-        <div className={styles.pinInputItem}>2</div>
-        <div className={styles.pinInputItem}>3</div>
-        <div className={styles.pinInputItem}>4</div>
-        <div className={styles.pinInputItem}>5</div>
-        <div className={styles.pinInputItem}>6</div>
+        {inputDefaultValues.map((defaultValue, index) => (
+          <div key={index} className={getClassesInput(pin[index], isFirstLogin)}>
+            {pin[index] ?? defaultValue}
+          </div>
+        ))}
       </div>
+      {isErrorPin && <div className={styles.error}>{ERROR_MESSAGE}</div>}
       <div className={styles.keypad}>
-        <button className={styles.keyPadButton}>1</button>
-        <button className={styles.keyPadButton}>2</button>
-        <button className={styles.keyPadButton}>3</button>
-        <button className={styles.keyPadButton}>4</button>
-        <button className={styles.keyPadButton}>5</button>
-        <button className={styles.keyPadButton}>6</button>
-        <button className={styles.keyPadButton}>7</button>
-        <button className={styles.keyPadButton}>8</button>
-        <button className={styles.keyPadButton}>9</button>
-        <button className={`${styles.keyPadButton} ${styles.zero}`}>0</button>
-        <button className={styles.keyPadButton}>C</button>
+        {keys.map((key) => (
+          <button
+            key={key.value}
+            className={getClassesKey(key.value)}
+            onClick={handleChangePin}
+            value={key.value}
+          >
+            <p>{key.value}</p>
+            <p>{key.chars?.join(' ')}</p>
+          </button>
+        ))}
       </div>
     </div>
   );

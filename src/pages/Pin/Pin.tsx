@@ -6,6 +6,7 @@ import {
   checkSavePin,
   savePin,
   setIsErrorPin,
+  setIsLogin,
   selectorIsErrorPin,
   selectorIsFirstLogin,
   selectorSavedPin,
@@ -38,10 +39,10 @@ export function Pin() {
   const isErrorPin = useAppSelector(selectorIsErrorPin);
 
   useEffect(() => {
-    const localPin = localStorage.getItem('pin');
-    if (localPin) {
-      dispatch(checkSavePin(localPin));
+    if (savedPin) {
+      dispatch(checkSavePin());
     }
+    dispatch(setIsLogin(false));
   }, []);
 
   useEffect(() => {
@@ -50,10 +51,12 @@ export function Pin() {
     if (pin.length === 6 && isFirstLogin) {
       const hashedPin = hashPin(pin);
       dispatch(savePin(hashedPin));
+      dispatch(setIsLogin(true));
       navigate('/home');
     }
     if (pin.length === 6 && !isFirstLogin && !isError) {
       navigate('/home');
+      dispatch(setIsLogin(true));
     }
     if (pin.length === 6 && !isFirstLogin && isError) {
       dispatch(setIsErrorPin(isError));

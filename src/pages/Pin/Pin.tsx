@@ -17,6 +17,7 @@ import {
   SET_PIN_MESSAGE,
   ENTER_PIN_MESSAGE,
 } from '../../constants';
+import { hashPin, comparePin } from '../../utils';
 
 import styles from './Pin.module.css';
 
@@ -44,10 +45,11 @@ export function Pin() {
   }, []);
 
   useEffect(() => {
-    const isError = pin !== savedPin;
+    const isError = !comparePin(pin, savedPin);
 
     if (pin.length === 6 && isFirstLogin) {
-      dispatch(savePin(pin));
+      const hashedPin = hashPin(pin);
+      dispatch(savePin(hashedPin));
       navigate('/home');
     }
     if (pin.length === 6 && !isFirstLogin && !isError) {

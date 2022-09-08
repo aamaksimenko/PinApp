@@ -3,14 +3,12 @@ import { RootState } from './store'
 
 export interface PinState {
   savedPin: string
-  inputPin: string
   isFirstLogin: boolean
   isErrorPin: boolean
 }
 
 const initialState: PinState = {
   savedPin: '',
-  inputPin: '',
   isFirstLogin: true,
   isErrorPin: false,
 }

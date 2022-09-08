@@ -10,7 +10,13 @@ import {
   selectorIsFirstLogin,
   selectorSavedPin,
 } from '../../redux/pinSlice';
-import { keys, inputDefaultValues, ERROR_MESSAGE } from '../../constants';
+import {
+  keys,
+  inputDefaultValues,
+  ERROR_MESSAGE,
+  SET_PIN_MESSAGE,
+  ENTER_PIN_MESSAGE,
+} from '../../constants';
 
 import styles from './Pin.module.css';
 
@@ -49,6 +55,7 @@ export function Pin() {
     }
     if (pin.length === 6 && !isFirstLogin && isError) {
       dispatch(setIsErrorPin(isError));
+      setPin('');
     }
   }, [pin]);
 
@@ -60,6 +67,9 @@ export function Pin() {
     }
     if (pin.length < 6) {
       setPin(pin + event.currentTarget.value);
+      if (isErrorPin) {
+        dispatch(setIsErrorPin(false));
+      }
     }
   };
 
@@ -72,7 +82,11 @@ export function Pin() {
           </div>
         ))}
       </div>
-      {isErrorPin && <div className={styles.error}>{ERROR_MESSAGE}</div>}
+      <div className={styles.infoBlock}>
+        {isFirstLogin && <div className={styles.enterPin}>{SET_PIN_MESSAGE}</div>}
+        {!isFirstLogin && !isErrorPin && <div className={styles.enterPin}>{ENTER_PIN_MESSAGE}</div>}
+        {isErrorPin && <div className={styles.error}>{ERROR_MESSAGE}</div>}
+      </div>
       <div className={styles.keypad}>
         {keys.map((key) => (
           <button
@@ -81,8 +95,8 @@ export function Pin() {
             onClick={handleChangePin}
             value={key.value}
           >
-            <p>{key.value}</p>
-            <p>{key.chars?.join(' ')}</p>
+            <p className={styles.numbers}>{key.value}</p>
+            <p className={styles.chars}>{key.chars?.join(' ')}</p>
           </button>
         ))}
       </div>

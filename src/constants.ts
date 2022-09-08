@@ -1,6 +1,8 @@
 import { Key } from './types';
 
 export const ERROR_MESSAGE = 'Wrong pin code'
+export const SET_PIN_MESSAGE = 'Set pin code'
+export const ENTER_PIN_MESSAGE = 'Enter pin code'
 
 export const keyValue = {
   one: '1',

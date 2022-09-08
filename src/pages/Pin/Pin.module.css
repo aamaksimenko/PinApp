@@ -1,5 +1,6 @@
 .wrapper{
-padding-top: 60px
+padding-top: 60px;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .pinInputCircles {
   display:flex;
@@ -33,6 +34,17 @@ padding-top: 60px
   color: #e0dada;
   cursor: pointer;
 }
+.numbers{
+  font-size: 35px;
+
+  margin: 0;
+  padding: 0;
+}
+.chars{
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+}
 .zero {
   grid-column-start: 2;
 }
@@ -46,7 +58,15 @@ padding-top: 60px
   background-color: var(--text);
 }
 .error {
-  margin: 10px auto;
-    max-width: fit-content;
-    color: #e50505;
+  color: #e50505;
+}
+.enterPin {
+  color: #e0dada;
+}
+.infoBlock{
+  height: 50px;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -18,6 +18,11 @@ export const keyValue = {
   reset: 'C',
 } as const;
 
+export const navigation = {
+  pin: '/pin',
+  home: '/home'
+}
+
 export const inputDefaultValues = ['', '', '', '', '', ''];
 
 export const keys: Key[] = [

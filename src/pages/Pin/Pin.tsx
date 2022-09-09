@@ -13,6 +13,8 @@ import {
 } from '../../redux/pinSlice';
 import {
   keys,
+  keyValue,
+  navigation,
   inputDefaultValues,
   ERROR_MESSAGE,
   SET_PIN_MESSAGE,
@@ -54,7 +56,7 @@ export function Pin() {
       setPin('');
     }
     if (pin.length === 6 && !isFirstLogin && !isError) {
-      navigate('/home');
+      navigate(navigation.home);
       dispatch(setIsLogin(true));
     }
     if (pin.length === 6 && !isFirstLogin && isError) {
@@ -64,7 +66,7 @@ export function Pin() {
   }, [pin]);
 
   const handleChangePin = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (event.currentTarget.value === 'C') {
+    if (event.currentTarget.value === keyValue.reset) {
       setPin(pin.slice(0, -1));
       dispatch(setIsErrorPin(false));
       return;

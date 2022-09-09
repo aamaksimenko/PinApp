@@ -3,7 +3,9 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  font-family: 'Fredoka One', cursive;
 }
 .title {
   color: var(--text);
+  font-size: 100px;
 }

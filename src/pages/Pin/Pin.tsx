@@ -51,8 +51,7 @@ export function Pin() {
     if (pin.length === 6 && isFirstLogin) {
       const hashedPin = hashPin(pin);
       dispatch(savePin(hashedPin));
-      dispatch(setIsLogin(true));
-      navigate('/home');
+      setPin('');
     }
     if (pin.length === 6 && !isFirstLogin && !isError) {
       navigate('/home');

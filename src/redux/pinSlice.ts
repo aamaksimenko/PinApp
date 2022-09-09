@@ -24,6 +24,7 @@ export const pinSlice = createSlice({
     },
     savePin: (state, action: PayloadAction<string>) => {
       state.savedPin = action.payload;
+      state.isFirstLogin = false;
     },
     setIsErrorPin: (state, action: PayloadAction<boolean>) => {
       state.isErrorPin = action.payload;
